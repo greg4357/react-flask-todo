@@ -37,6 +37,8 @@ React と Flask を用いたシンプルな TODO 管理アプリです。
 ---
 
 ## ディレクトリ構成
+
+```text
 react-flask-todo/
 ├── backend/
 │   ├── app.py              # Flaskアプリ本体（API）
@@ -53,6 +55,8 @@ react-flask-todo/
 │
 ├── .gitignore
 └── README.md
+```
+
 
 
 ---
