@@ -58,6 +58,27 @@ react-flask-todo/
 ```
 
 
+------------------------------------------------------
+react-flask-todo/
+├── backend/
+│   ├── app.py              # Flaskアプリ本体（API）
+│   ├── requirements.txt    # Python依存関係
+│   └── venv/               # 仮想環境（※Git管理外）
+│
+├── frontend/
+│   ├── src/
+│   │   ├── App.jsx         # TODOアプリのメインコンポーネント
+│   │   └── main.jsx        # エントリーポイント
+|   |
+│   ├── public/
+│   ├── package.json        # npm依存関係
+│   └── node_modules/       # 依存パッケージ（※Git管理外）
+│
+├── .gitignore
+└── README.md
+------------------------------------------------------
+
+
 
 ---
 
