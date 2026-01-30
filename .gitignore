@@ -1,4 +1,5 @@
 # Python
+backend/instance/
 backend/venv/
 __pycache__/
 *.pyc
