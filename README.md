@@ -1,14 +1,11 @@
-# React + Flask TODO App
+# React + Flask TODO App（DB対応版）
 
 ## 概要
-React と Flask を用いたシンプルな TODO 管理アプリです。  
-フロントエンドとバックエンドを分離し、REST API を介して通信する最小構成のアプリとして作成しました。
+React と Flask を用いた TODO 管理アプリです。  
+フロントエンドとバックエンドを分離し、REST API を介して通信します。  
 
-学習目的として、機能追加よりも以下を重視しています。
-
-- API 設計の基礎理解  
-- フロントエンド / バックエンドの責務分離  
-- Git を用いた基本的な開発フローの習得  
+今回のバージョンでは、**SQLite データベースにタスクを永続化**するように改修しています。  
+これにより、ページを再読み込みしてもタスク状態が保持されます。
 
 ---
 
@@ -23,7 +20,11 @@ React と Flask を用いたシンプルな TODO 管理アプリです。
 ### バックエンド
 - Python
 - Flask
-- flask-cors
+- Flask-CORS
+- Flask-SQLAlchemy
+
+### データベース
+- SQLite
 
 ---
 
@@ -31,8 +32,8 @@ React と Flask を用いたシンプルな TODO 管理アプリです。
 - TODO 一覧取得（GET）
 - TODO 追加（POST）
 - TODO 削除（DELETE）
-
-※ データはインメモリで管理しています（DB 未使用）
+- TODO 完了 / 未完了の切替（PATCH）
+- データは SQLite データベースに保存され、永続化されます
 
 ---
 
@@ -58,47 +59,59 @@ react-flask-todo/
 ```
 
 
-------------------------------------------------------
-react-flask-todo/
-├── backend/
-│   ├── app.py              # Flaskアプリ本体（API）
-│   ├── requirements.txt    # Python依存関係
-│   └── venv/               # 仮想環境（※Git管理外）
-│
-├── frontend/
-│   ├── src/
-│   │   ├── App.jsx         # TODOアプリのメインコンポーネント
-│   │   └── main.jsx        # エントリーポイント
-|   |
-│   ├── public/
-│   ├── package.json        # npm依存関係
-│   └── node_modules/       # 依存パッケージ（※Git管理外）
-│
-├── .gitignore
-└── README.md
-------------------------------------------------------
-
-
 
 ---
 
 ## API仕様（簡易）
 
 ### TODO一覧取得
-- **GET** `/todos`
+- **GET** `/api/todos`
+- 返却例:
+```json
+[
+  {
+    "id": 1,
+    "title": "sample todo",
+    "completed": false
+  },
+  {
+    "id": 2,
+    "title": "another todo",
+    "completed": true
+  }
+]
+```
+
 
 ### TODO追加
-- **POST** `/todos`
+- **POST** `/api/todos`
 - リクエスト例:
 ```json
 {
   "title": "sample todo"
 }
 ```
+- 返却例:
+```json
+{
+  "id": 3,
+  "title": "新しいタスク",
+  "completed": false
+}
+```
+
+### TODO完了/未完了切替
+- **PATCH** `/api/todos/<id>`
+- リクエスト例:
+```json
+{
+  "completed": true
+}
+```
 
 ### TODO削除
-
-- **DELETE** `/todos/<id>`
+- **DELETE** `/api/todos/<id>`
+- 返却例:空 (HTTPステータス 204)
 
 ---
 
@@ -134,13 +147,11 @@ npm run dev
 - REST API を介したフロントエンドとバックエンドの通信設計
 - React 側での状態管理と API 呼び出しの基本
 - Flask によるシンプルな API 実装
+- SQLite データベースを用いた永続化
 - Git / GitHub を用いた基本的な開発フローの習得
 
-※ データはインメモリで管理しており、  
-永続化（データベース連携）は今後の拡張課題としています。
-
 ## 今後の改善予定
-
-- データベース（SQLite / PostgreSQL）との連携
 - TODO 編集機能の追加
-- FastAPI への置き換え
+- ユーザー認証・ログイン機能の追加
+- PostgreSQL など他 DB への対応
+
